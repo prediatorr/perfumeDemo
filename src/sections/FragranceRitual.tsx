@@ -105,7 +105,7 @@ export function FragranceRitual() {
                 scrub: 1,
                 horizontal: true,
               },
-            },
+            }
           );
         }
       });
@@ -119,7 +119,7 @@ export function FragranceRitual() {
       id="fragrance-ritual"
       ref={sectionRef}
       style={{
-        height: "200vh",
+        height: "100vh",
         position: "relative",
         backgroundColor: "var(--midnight)",
       }}
