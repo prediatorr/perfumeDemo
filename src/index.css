@@ -187,6 +187,71 @@
   50% { transform: translate(-50%, calc(-50% + 4px)); }
 }
 
+@keyframes bottle-float-mobile {
+  0%, 100% { transform: translateX(-50%) translateY(-4px); }
+  50% { transform: translateX(-50%) translateY(4px); }
+}
+
+/* Hero — mobile (iPhone 12 Pro @ 390px and similar) */
+.hero-brand-type__mobile {
+  display: none;
+}
+
+.hero-brand-type__desktop {
+  white-space: nowrap;
+}
+
+@media (max-width: 428px) {
+  .hero-brand-type {
+    top: 10% !important;
+    width: 92vw;
+    max-width: 22rem;
+  }
+
+  .hero-brand-type__desktop {
+    display: none;
+  }
+
+  .hero-brand-type__mobile {
+    display: block;
+    white-space: nowrap;
+    font-size: clamp(1.5rem, 7.2vw, 2rem);
+    letter-spacing: 0.12em;
+  }
+
+  .hero-bottle {
+    left: 50% !important;
+    top: 23% !important;
+    width: clamp(6.75rem, 32vw, 9.5rem) !important;
+    height: clamp(9.5rem, 44vw, 13.5rem) !important;
+    animation: bottle-float-mobile 4s ease-in-out infinite !important;
+  }
+
+  .hero-headline {
+    left: 1.25rem !important;
+    right: 1.25rem !important;
+    bottom: 6% !important;
+    max-width: none !important;
+  }
+
+  .hero-headline .flex {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+}
+
+/* Hero — tablet (iPad Pro portrait & landscape, 429px–1366px) */
+@media (min-width: 429px) and (max-width: 1366px) {
+  .hero-bottle {
+    left: 50% !important;
+    top: 32% !important;
+    width: clamp(9rem, 18vw, 12.5rem) !important;
+    height: clamp(13rem, 26vw, 17.5rem) !important;
+    animation: bottle-float-mobile 4s ease-in-out infinite !important;
+  }
+}
+
 /* Particle drift */
 @keyframes particle-drift {
   0% { transform: translateY(100vh) translateX(0); opacity: 0; }

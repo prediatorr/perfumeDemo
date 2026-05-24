@@ -53,40 +53,57 @@ export function FragranceRitual() {
     const track = trackRef.current;
     if (!section || !track) return;
 
-    const totalScrollWidth = track.scrollWidth - window.innerWidth;
+    const getPanelWidth = () =>
+      section.clientWidth || window.innerWidth;
+
+    const getScrollDistance = () =>
+      Math.max(0, (scenes.length - 1) * getPanelWidth());
+
+    const syncPanelWidths = () => {
+      const w = getPanelWidth();
+      section.style.setProperty("--ritual-panel-width", `${w}px`);
+      track.querySelectorAll<HTMLElement>(".scene-panel").forEach((panel) => {
+        panel.style.width = `${w}px`;
+        panel.style.minWidth = `${w}px`;
+        panel.style.flexShrink = "0";
+      });
+    };
+
+    syncPanelWidths();
+
+    const updateDots = (progress: number) => {
+      if (!dotsRef.current) return;
+      const dots = dotsRef.current.querySelectorAll(".ritual-dot");
+      const scaled = progress * scenes.length;
+      dots.forEach((dot, i) => {
+        const isActive =
+          Math.floor(scaled) === i ||
+          (scaled >= scenes.length - 0.5 && i === scenes.length - 1);
+        (dot as HTMLElement).style.background = isActive
+          ? "var(--amber-gold)"
+          : "rgba(255,255,255,0.2)";
+        (dot as HTMLElement).style.width = isActive ? "8px" : "6px";
+        (dot as HTMLElement).style.height = isActive ? "8px" : "6px";
+      });
+    };
 
     const ctx = gsap.context(() => {
-      // Main horizontal scroll
-      gsap.to(track, {
-        x: -totalScrollWidth,
+      const scrollTween = gsap.to(track, {
+        x: () => -getScrollDistance(),
         ease: "none",
         scrollTrigger: {
           trigger: section,
           pin: true,
+          pinType: "transform",
           scrub: 1.5,
-          end: () => `+=${totalScrollWidth}`,
+          start: "top top",
+          end: () => `+=${getScrollDistance()}`,
           anticipatePin: 1,
-          onUpdate: (self) => {
-            // Update dots
-            if (dotsRef.current) {
-              const dots = dotsRef.current.querySelectorAll(".ritual-dot");
-              const progress = self.progress * scenes.length;
-              dots.forEach((dot, i) => {
-                const isActive =
-                  Math.floor(progress) === i ||
-                  (progress >= scenes.length - 0.5 && i === scenes.length - 1);
-                (dot as HTMLElement).style.background = isActive
-                  ? "var(--amber-gold)"
-                  : "rgba(255,255,255,0.2)";
-                (dot as HTMLElement).style.width = isActive ? "8px" : "6px";
-                (dot as HTMLElement).style.height = isActive ? "8px" : "6px";
-              });
-            }
-          },
+          invalidateOnRefresh: true,
+          onUpdate: (self) => updateDots(self.progress),
         },
       });
 
-      // Text overlays fade in/out per scene
       const scenePanels = track.querySelectorAll(".scene-panel");
       scenePanels.forEach((panel) => {
         const text = panel.querySelector(".scene-text");
@@ -100,10 +117,10 @@ export function FragranceRitual() {
               ease: "power2.out",
               scrollTrigger: {
                 trigger: panel,
+                containerAnimation: scrollTween,
                 start: "left 80%",
                 end: "left 20%",
                 scrub: 1,
-                horizontal: true,
               },
             }
           );
@@ -111,7 +128,30 @@ export function FragranceRitual() {
       });
     }, section);
 
-    return () => ctx.revert();
+    const refreshScroll = () => {
+      syncPanelWidths();
+      ScrollTrigger.refresh();
+    };
+
+    const resizeObserver = new ResizeObserver(refreshScroll);
+    resizeObserver.observe(section);
+
+    window.addEventListener("resize", refreshScroll);
+    window.addEventListener("orientationchange", refreshScroll);
+
+    track.querySelectorAll("img").forEach((img) => {
+      if (img.complete) return;
+      img.addEventListener("load", refreshScroll, { once: true });
+    });
+
+    requestAnimationFrame(refreshScroll);
+
+    return () => {
+      window.removeEventListener("resize", refreshScroll);
+      window.removeEventListener("orientationchange", refreshScroll);
+      resizeObserver.disconnect();
+      ctx.revert();
+    };
   }, []);
 
   return (
@@ -184,7 +224,8 @@ export function FragranceRitual() {
               key={scene.id}
               className="scene-panel"
               style={{
-                width: "100vw",
+                width: "var(--ritual-panel-width, 100vw)",
+                minWidth: "var(--ritual-panel-width, 100vw)",
                 height: "100vh",
                 position: "relative",
                 flexShrink: 0,

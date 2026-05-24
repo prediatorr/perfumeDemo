@@ -87,6 +87,7 @@ function GlassBottle() {
 
   return (
     <div
+      className="hero-bottle"
       style={{
         position: "absolute",
         left: "55%",
@@ -252,13 +253,14 @@ export function Hero() {
 
       {/* FRAGRANTOR'S TYPE (z: 2) */}
       <div
+        className="hero-brand-type"
         style={{
           position: "absolute",
           top: "6%",
           left: "50%",
           transform: "translateX(-50%)",
           zIndex: 2,
-          whiteSpace: "nowrap",
+          textAlign: "center",
           fontFamily: '"Cormorant Garamond", serif',
           fontSize: "clamp(60px, 8vw, 140px)",
           fontWeight: 200,
@@ -268,7 +270,8 @@ export function Hero() {
           userSelect: "none",
         }}
       >
-        F R A G R A N T O R ' S
+        <span className="hero-brand-type__desktop">F R A G R A N T O R &apos; S</span>
+        <span className="hero-brand-type__mobile">FRAGRANTOR&apos;S</span>
       </div>
 
       {/* SMOKE LAYER (z: 5) */}
@@ -281,6 +284,7 @@ export function Hero() {
 
       {/* HERO HEADLINE (z: 8) */}
       <div
+        className="hero-headline"
         style={{
           position: "absolute",
           left: "clamp(24px, 4vw, 80px)",
