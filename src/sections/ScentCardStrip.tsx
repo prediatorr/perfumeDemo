@@ -62,7 +62,7 @@ function ScentCard({ card }: { card: typeof cards[0] }) {
           muted
           loop
           playsInline
-          preload="none"
+          preload="auto"
           poster={card.image}
           style={{
             width: '100%',

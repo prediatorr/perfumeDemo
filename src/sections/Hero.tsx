@@ -90,7 +90,7 @@ function GlassBottle() {
       style={{
         position: "absolute",
         left: "55%",
-        top: "45%",
+        top: "67%",
         width: "clamp(140px, 18vw, 240px)",
         height: "clamp(200px, 26vw, 360px)",
         zIndex: 6,
@@ -254,16 +254,16 @@ export function Hero() {
       <div
         style={{
           position: "absolute",
-          top: "15%",
+          top: "6%",
           left: "50%",
           transform: "translateX(-50%)",
           zIndex: 2,
           whiteSpace: "nowrap",
           fontFamily: '"Cormorant Garamond", serif',
-          fontSize: "clamp(60px, 10vw, 140px)",
+          fontSize: "clamp(60px, 8vw, 140px)",
           fontWeight: 200,
           letterSpacing: "0.04em",
-          color: "rgba(245,235,220,0.08)",
+          color: "rgba(245,235,220,0.38)",
           pointerEvents: "none",
           userSelect: "none",
         }}
@@ -298,6 +298,7 @@ export function Hero() {
             textTransform: "uppercase",
             letterSpacing: "0.22em",
             color: "var(--amber-gold)",
+
             marginBottom: "16px",
             opacity: loaded ? 1 : 0,
             transition: "opacity 800ms cubic-bezier(0.16, 1, 0.3, 1) 800ms",
