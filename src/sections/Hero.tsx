@@ -1,171 +1,171 @@
 import { useEffect, useState } from 'react';
 
-function SmokeSVG({ opacity = 0.35 }: { opacity?: number }) {
-  return (
-    <svg
-      viewBox="0 0 100 100"
-      preserveAspectRatio="none"
-      style={{
-        position: 'absolute',
-        inset: 0,
-        width: '100%',
-        height: '100%',
-        pointerEvents: 'none',
-        zIndex: 5,
-      }}
-    >
-      <defs>
-        <filter id="hero-smoke" x="-20%" y="-20%" width="140%" height="140%">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.008 0.004"
-            numOctaves="5"
-            seed="7"
-            result="noise"
-          >
-            <animate attributeName="seed" values="7;12;7" dur="8s" repeatCount="indefinite" />
-          </feTurbulence>
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="noise"
-            scale="40"
-            xChannelSelector="R"
-            yChannelSelector="G"
-            result="displaced"
-          />
-          <feGaussianBlur stdDeviation="2" result="blurred" />
-        </filter>
-        <linearGradient id="hero-smoke-grad" x1="0" y1="1" x2="0" y2="0">
-          <stop offset="0%" stopColor="rgba(7,7,7,0.8)" />
-          <stop offset="50%" stopColor="rgba(26,18,14,0.3)" />
-          <stop offset="100%" stopColor="transparent" />
-        </linearGradient>
-      </defs>
-      <rect
-        width="100"
-        height="100"
-        fill="url(#hero-smoke-grad)"
-        filter="url(#hero-smoke)"
-        opacity={opacity}
-      />
-    </svg>
-  );
-}
+// function SmokeSVG({ opacity = 0.35 }: { opacity?: number }) {
+//   return (
+//     <svg
+//       viewBox="0 0 100 100"
+//       preserveAspectRatio="none"
+//       style={{
+//         position: 'absolute',
+//         inset: 0,
+//         width: '100%',
+//         height: '100%',
+//         pointerEvents: 'none',
+//         zIndex: 5,
+//       }}
+//     >
+//       <defs>
+//         <filter id="hero-smoke" x="-20%" y="-20%" width="140%" height="140%">
+//           <feTurbulence
+//             type="fractalNoise"
+//             baseFrequency="0.008 0.004"
+//             numOctaves="5"
+//             seed="7"
+//             result="noise"
+//           >
+//             <animate attributeName="seed" values="7;12;7" dur="8s" repeatCount="indefinite" />
+//           </feTurbulence>
+//           <feDisplacementMap
+//             in="SourceGraphic"
+//             in2="noise"
+//             scale="40"
+//             xChannelSelector="R"
+//             yChannelSelector="G"
+//             result="displaced"
+//           />
+//           <feGaussianBlur stdDeviation="2" result="blurred" />
+//         </filter>
+//         <linearGradient id="hero-smoke-grad" x1="0" y1="1" x2="0" y2="0">
+//           <stop offset="0%" stopColor="rgba(7,7,7,0.8)" />
+//           <stop offset="50%" stopColor="rgba(26,18,14,0.3)" />
+//           <stop offset="100%" stopColor="transparent" />
+//         </linearGradient>
+//       </defs>
+//       <rect
+//         width="100"
+//         height="100"
+//         fill="url(#hero-smoke-grad)"
+//         filter="url(#hero-smoke)"
+//         opacity={opacity}
+//       />
+//     </svg>
+//   );
+// }
 
-function GlassBottle() {
-  const particles = Array.from({ length: 20 }, (_, i) => ({
-    id: i,
-    duration: 8 + Math.random() * 12,
-    delay: Math.random() * 10,
-    radius: 60 + Math.random() * 80,
-    size: 1.5 + Math.random() * 1,
-  }));
+// function GlassBottle() {
+//   const particles = Array.from({ length: 20 }, (_, i) => ({
+//     id: i,
+//     duration: 8 + Math.random() * 12,
+//     delay: Math.random() * 10,
+//     radius: 60 + Math.random() * 80,
+//     size: 1.5 + Math.random() * 1,
+//   }));
 
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        left: '55%',
-        top: '45%',
-        width: 'clamp(140px, 18vw, 240px)',
-        height: 'clamp(200px, 26vw, 360px)',
-        zIndex: 6,
-        animation: 'bottle-float 4s ease-in-out infinite',
-      }}
-    >
-      {/* Bottle cap */}
-      <div
-        style={{
-          width: '40%',
-          height: '10%',
-          margin: '0 auto',
-          background: 'linear-gradient(to right, rgba(26,18,14,0.9) 0%, rgba(60,45,35,0.95) 40%, rgba(26,18,14,0.9) 100%)',
-          border: '1px solid rgba(214,168,106,0.3)',
-          borderRadius: '2px 2px 0 0',
-        }}
-      />
-      {/* Bottle body */}
-      <div
-        style={{
-          width: '100%',
-          height: '85%',
-          background: 'linear-gradient(135deg, rgba(214,168,106,0.35) 0%, rgba(214,168,106,0.08) 25%, rgba(245,235,220,0.15) 40%, rgba(214,168,106,0.05) 55%, rgba(245,235,220,0.1) 70%, rgba(214,168,106,0.25) 100%)',
-          backdropFilter: 'blur(8px) saturate(1.4)',
-          WebkitBackdropFilter: 'blur(8px) saturate(1.4)',
-          border: '1px solid rgba(214,168,106,0.4)',
-          borderRadius: '4px',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Liquid inside */}
-        <div
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: '60%',
-            background: 'linear-gradient(to top, rgba(90,60,30,0.6) 0%, rgba(140,100,50,0.3) 50%, transparent 100%)',
-            borderRadius: '0 0 3px 3px',
-          }}
-        />
-        {/* Highlight edge */}
-        <div
-          style={{
-            position: 'absolute',
-            top: 0,
-            right: '8%',
-            width: '2px',
-            height: '100%',
-            background: 'linear-gradient(to bottom, rgba(245,235,220,0.4) 0%, rgba(214,168,106,0.3) 50%, rgba(245,235,220,0.2) 100%)',
-          }}
-        />
-        {/* Label */}
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            textAlign: 'center',
-            fontFamily: '"Cormorant Garamond", serif',
-            fontSize: 'clamp(10px, 1.2vw, 14px)',
-            fontWeight: 300,
-            letterSpacing: '0.08em',
-            lineHeight: 1.3,
-            color: 'rgba(245,235,220,0.85)',
-            zIndex: 2,
-          }}
-        >
-          FRAGRANTOR'S<br />AROMA<br /><span style={{ fontSize: '0.6em', opacity: 0.7 }}>1850</span>
-        </div>
-      </div>
+//   return (
+//     <div
+//       style={{
+//         position: 'absolute',
+//         left: '55%',
+//         top: '45%',
+//         width: 'clamp(140px, 18vw, 240px)',
+//         height: 'clamp(200px, 26vw, 360px)',
+//         zIndex: 6,
+//         animation: 'bottle-float 4s ease-in-out infinite',
+//       }}
+//     >
+//       {/* Bottle cap */}
+//       <div
+//         style={{
+//           width: '40%',
+//           height: '10%',
+//           margin: '0 auto',
+//           background: 'linear-gradient(to right, rgba(26,18,14,0.9) 0%, rgba(60,45,35,0.95) 40%, rgba(26,18,14,0.9) 100%)',
+//           border: '1px solid rgba(214,168,106,0.3)',
+//           borderRadius: '2px 2px 0 0',
+//         }}
+//       />
+//       {/* Bottle body */}
+//       <div
+//         style={{
+//           width: '100%',
+//           height: '85%',
+//           background: 'linear-gradient(135deg, rgba(214,168,106,0.35) 0%, rgba(214,168,106,0.08) 25%, rgba(245,235,220,0.15) 40%, rgba(214,168,106,0.05) 55%, rgba(245,235,220,0.1) 70%, rgba(214,168,106,0.25) 100%)',
+//           backdropFilter: 'blur(8px) saturate(1.4)',
+//           WebkitBackdropFilter: 'blur(8px) saturate(1.4)',
+//           border: '1px solid rgba(214,168,106,0.4)',
+//           borderRadius: '4px',
+//           position: 'relative',
+//           overflow: 'hidden',
+//         }}
+//       >
+//         {/* Liquid inside */}
+//         <div
+//           style={{
+//             position: 'absolute',
+//             bottom: 0,
+//             left: 0,
+//             right: 0,
+//             height: '60%',
+//             background: 'linear-gradient(to top, rgba(90,60,30,0.6) 0%, rgba(140,100,50,0.3) 50%, transparent 100%)',
+//             borderRadius: '0 0 3px 3px',
+//           }}
+//         />
+//         {/* Highlight edge */}
+//         <div
+//           style={{
+//             position: 'absolute',
+//             top: 0,
+//             right: '8%',
+//             width: '2px',
+//             height: '100%',
+//             background: 'linear-gradient(to bottom, rgba(245,235,220,0.4) 0%, rgba(214,168,106,0.3) 50%, rgba(245,235,220,0.2) 100%)',
+//           }}
+//         />
+//         {/* Label */}
+//         <div
+//           style={{
+//             position: 'absolute',
+//             top: '50%',
+//             left: '50%',
+//             transform: 'translate(-50%, -50%)',
+//             textAlign: 'center',
+//             fontFamily: '"Cormorant Garamond", serif',
+//             fontSize: 'clamp(10px, 1.2vw, 14px)',
+//             fontWeight: 300,
+//             letterSpacing: '0.08em',
+//             lineHeight: 1.3,
+//             color: 'rgba(245,235,220,0.85)',
+//             zIndex: 2,
+//           }}
+//         >
+//           FRAGRANTOR'S<br />AROMA<br /><span style={{ fontSize: '0.6em', opacity: 0.7 }}>1850</span>
+//         </div>
+//       </div>
 
-      {/* Orbiting particles */}
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          style={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            width: `${p.size}px`,
-            height: `${p.size}px`,
-            background: 'rgba(214,168,106,0.5)',
-            borderRadius: '50%',
-            animation: `orbit ${p.duration}s linear infinite`,
-            animationDelay: `${p.delay}s`,
-            marginLeft: '-1px',
-            marginTop: '-1px',
-            // @ts-ignore
-            '--radius': `${p.radius}px`,
-          }}
-        />
-      ))}
-    </div>
-  );
-}
+//       {/* Orbiting particles */}
+//       {particles.map((p) => (
+//         <div
+//           key={p.id}
+//           style={{
+//             position: 'absolute',
+//             top: '50%',
+//             left: '50%',
+//             width: `${p.size}px`,
+//             height: `${p.size}px`,
+//             background: 'rgba(214,168,106,0.5)',
+//             borderRadius: '50%',
+//             animation: `orbit ${p.duration}s linear infinite`,
+//             animationDelay: `${p.delay}s`,
+//             marginLeft: '-1px',
+//             marginTop: '-1px',
+//             // @ts-ignore
+//             '--radius': `${p.radius}px`,
+//           }}
+//         />
+//       ))}
+//     </div>
+//   );
+// }
 
 function OrbitingParticleStyle() {
   return (
