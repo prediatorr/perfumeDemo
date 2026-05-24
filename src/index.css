@@ -201,6 +201,16 @@
   white-space: nowrap;
 }
 
+@media (max-width: 767px) {
+  #atmosphere-lab {
+    padding-bottom: 48px !important;
+  }
+
+  .fragrance-ritual-mobile {
+    margin-top: 0;
+  }
+}
+
 @media (max-width: 428px) {
   .hero-brand-type {
     top: 10% !important;
