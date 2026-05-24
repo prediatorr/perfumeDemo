@@ -240,10 +240,10 @@ export function Hero() {
       </div>
 
       {/* SMOKE LAYER (z: 5) */}
-      <SmokeSVG opacity={0.35} />
+      {/* <SmokeSVG opacity={0.35} /> */}
 
       {/* GLASS BOTTLE (z: 6) */}
-      <GlassBottle />
+      {/* <GlassBottle /> */}
 
       {/* HERO HEADLINE (z: 8) */}
       <div
